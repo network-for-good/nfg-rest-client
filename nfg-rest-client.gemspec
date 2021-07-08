@@ -38,5 +38,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activesupport"
   spec.add_dependency "json"
-  spec.add_dependency "flexirest"
+  spec.add_dependency "flexirest", '~> 1.2.0'
 end
