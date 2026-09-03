@@ -14,7 +14,7 @@ describe NfgRestClient::CardOnFile  do
     context "when the response is successful" do
       it "should have a status of 'Success'" do
         expect(card_on_file.status).to eq("Success")
-        expect(card_on_file.cardOnFileId).not_to be_blank
+        expect(card_on_file.cardOnFileId).to eq(13338)
       end
     end
   end
