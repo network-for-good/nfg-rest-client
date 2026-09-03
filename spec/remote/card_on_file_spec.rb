@@ -1,10 +1,13 @@
-require 'spec_remote_helper'
+require 'spec_helper'
 
 describe NfgRestClient::Donation  do
   include NfgRestClient::SpecAttributes
+  include NfgRestClientStubs
+
   let(:card_on_file) { NfgRestClient::CardOnFile.new(card_on_file_attributes) }
   describe "#create" do
     before do
+      stub_successful_card_on_file
       card_on_file.create
     end
 

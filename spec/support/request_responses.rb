@@ -19,6 +19,10 @@ module NfgRestClientStubs
     stub_successful_create_action(path: "/service/rest/cardOnFile", body: NfgRestClientStubs::RequestResponses.card_on_file_failure.to_json)
   end
 
+  def stub_successful_access_token
+    stub_successful_create_action(path: "/access/rest/token", body: NfgRestClientStubs::RequestResponses.access_token_success.to_json)
+  end
+
   def stub_successful_create_action(options)
     stub_create_action(options.merge(status: 200))
   end
@@ -80,6 +84,16 @@ module NfgRestClientStubs
         "donorToken" => "802f365c-ed3d-4c80-8700-374aee6ac62c",
         "cardOnFileId" => 0
       }
+    end
+
+    def self.access_token_success(options = {})
+      {
+        "status" => "Success",
+        "message" => "",
+        "errorDetails" => [],
+        "callDuration" => 0.5423,
+        "token" => "stubbed-access-token"
+      }.merge(options)
     end
   end
 end
