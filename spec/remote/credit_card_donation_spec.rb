@@ -36,7 +36,7 @@ describe NfgRestClient::Donation  do
         donation.create
       end
 
-      it "should not have a status of success and not return an chargeID" do
+      it "should not have a status of success and not return a chargeID" do
         expect(donation.status).not_to eq("Success")
         expect(donation.chargeId).not_to be_blank
         expect(donation.chargeId.to_s).not_to eq('0')

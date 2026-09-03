@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe NfgRestClient::Donation  do
+describe NfgRestClient::CardOnFile  do
   include NfgRestClient::SpecAttributes
   include NfgRestClientStubs
 

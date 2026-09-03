@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- CircleCI build config (`.circleci/config.yml`, `cimg/ruby:3.4.2`), replacing the legacy Travis CI setup.
+- CircleCI build config (`.circleci/config.yml`, `cimg/ruby:3.4.2`), superseding the legacy `.travis.yml` setup (Travis config left in place for now; removal tracked as a follow-up).
 - `.ruby-version` pinning Ruby `3.4.2`.
 
 ### Changed

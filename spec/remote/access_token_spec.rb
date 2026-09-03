@@ -7,8 +7,8 @@ describe NfgRestClient::AccessToken do
   describe "#create" do
     context "when the response is successful" do
       before do
-        NfgRestClient::Base.userid = "test-user"
-        NfgRestClient::Base.password = "test-password"
+        access_token.userid = "test-user"
+        access_token.password = "test-password"
         stub_successful_access_token
         access_token.create
       end
