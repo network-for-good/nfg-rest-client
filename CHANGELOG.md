@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Pinned transitive `activesupport` to `= 7.2.3.2` to resolve 16 CVEs.
+- Pinned transitive `activesupport` to `= 7.2.3.2` to resolve known CVEs (see the Gemfile comment for the full list).
 - Committed `Gemfile.lock` (previously gitignored) for CI reproducibility.
 - Relaxed the `bundler` development dependency (was pinned to `~> 2.2.33`, incompatible with Ruby 3.4.2).
 - Added `rspec_junit_formatter` development dependency for CircleCI test reporting.

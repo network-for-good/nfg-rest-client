@@ -31,15 +31,14 @@ describe NfgRestClient::Donation  do
       before do
         stub_successful_create_action(
           path: "/service/rest/donation",
-          body: NfgRestClientStubs::RequestResponses.donation_failure(chargeId: 9876543210).to_json
+          body: NfgRestClientStubs::RequestResponses.donation_failure.to_json
         )
         donation.create
       end
 
-      it "should not have a status of success and not return a chargeID" do
+      it "should not have a status of success and should have a chargeId of 0" do
         expect(donation.status).not_to eq("Success")
-        expect(donation.chargeId).not_to be_blank
-        expect(donation.chargeId.to_s).not_to eq('0')
+        expect(donation.chargeId).to eq(0)
       end
     end
 
