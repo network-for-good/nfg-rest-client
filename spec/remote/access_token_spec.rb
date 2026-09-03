@@ -15,7 +15,7 @@ describe NfgRestClient::AccessToken do
 
       it "should have a status of 'Success'" do
         expect(access_token.status).to eq("Success")
-        expect(access_token.token).to be
+        expect(access_token.token).to eq("stubbed-access-token")
       end
     end
   end

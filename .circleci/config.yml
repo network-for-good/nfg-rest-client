@@ -12,6 +12,9 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          name: install bundler matching Gemfile.lock
+          command: gem install bundler -v 4.0.4
       - ruby/install-deps:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
           include-branch-in-cache-key: false
