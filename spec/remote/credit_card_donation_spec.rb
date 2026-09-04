@@ -1,16 +1,23 @@
-require 'spec_remote_helper'
+require 'spec_helper'
 
 describe NfgRestClient::Donation  do
   include NfgRestClient::SpecAttributes
+  include NfgRestClientStubs
+
   let(:donation) { NfgRestClient::Donation.new(donation_attributes(changes_to_attributes,  "underscore")) }
   let(:charged_id_regex) { /^\d{10}$/ }
-  describe "#create" do
-    before do
-    end
 
+  describe "#create" do
     context "when the response is successful" do
-      it "should have a status of 'Success' and return a chargeID with a non-zero value" do
+      before do
+        stub_successful_create_action(
+          path: "/service/rest/donation",
+          body: NfgRestClientStubs::RequestResponses.donation_success(chargeId: 1234567890).to_json
+        )
         donation.create
+      end
+
+      it "should have a status of 'Success' and return a chargeID with a non-zero value" do
         expect(donation.status).to eq("Success")
         expect(donation.chargeId.to_s).to match(charged_id_regex)
         expect(donation.cardOnFileId).to eq(0)
@@ -18,12 +25,20 @@ describe NfgRestClient::Donation  do
     end
 
     context "when the response is not successful" do
-      let(:security_code) { '301' } # a security code in the 300-600 range will result in an error
-      it "should not have a status of success and not return an chargeID" do
+      # a security code in the 300-600 range results in an error on the live NFG sandbox
+      let(:security_code) { '301' }
+
+      before do
+        stub_successful_create_action(
+          path: "/service/rest/donation",
+          body: NfgRestClientStubs::RequestResponses.donation_failure.to_json
+        )
         donation.create
+      end
+
+      it "should not have a status of success and should have a chargeId of 0" do
         expect(donation.status).not_to eq("Success")
-        expect(donation.chargeId).not_to be_blank
-        expect(donation.chargeId.to_s).not_to eq('0')
+        expect(donation.chargeId).to eq(0)
       end
     end
 
@@ -31,8 +46,15 @@ describe NfgRestClient::Donation  do
       let(:donation) { NfgRestClient::Donation.new(donation_attributes(changes_to_attributes,  "underscore")).tap { |d| d.payment.storeCardOnFile = true } }
 
       context "when the response is successful" do
-        it "should have a status of 'Success' and return a chargeID with a non-zero value" do
+        before do
+          stub_successful_create_action(
+            path: "/service/rest/donation",
+            body: NfgRestClientStubs::RequestResponses.donation_success(chargeId: 1234567890, cardOnFileId: 1234567).to_json
+          )
           donation.create
+        end
+
+        it "should have a status of 'Success' and return a chargeID with a non-zero value" do
           expect(donation.status).to eq("Success")
           expect(donation.chargeId.to_s).to match(charged_id_regex)
           expect(donation.cardOnFileId.to_s).to match(/^\d{7}$/) #7 digit number
@@ -47,8 +69,15 @@ describe NfgRestClient::Donation  do
       let(:changes_to_attributes) { { "add_or_deduct_fee_amount" => add_or_deduct_fee_amount } }
 
       context "and the attempt is successful" do
-        it "should have a status of success and return a chargeID with a non-zero value" do
+        before do
+          stub_successful_create_action(
+            path: "/service/rest/donation",
+            body: NfgRestClientStubs::RequestResponses.donation_success(chargeId: 1234567890).to_json
+          )
           donation.create
+        end
+
+        it "should have a status of success and return a chargeID with a non-zero value" do
           expect(donation.status).to eq("Success")
           expect(donation.chargeId.to_s).to match(charged_id_regex)
         end
@@ -61,15 +90,22 @@ describe NfgRestClient::Donation  do
       let(:card_on_file_id) { @card_on_file_id }
 
       before do
-        card_on_file =  NfgRestClient::CardOnFile.new(card_on_file_attributes)
+        stub_successful_create_action(
+          path: "/service/rest/cardOnFile",
+          body: NfgRestClientStubs::RequestResponses.card_on_file_success.to_json
+        )
+        card_on_file = NfgRestClient::CardOnFile.new(card_on_file_attributes)
         card_on_file.create
         @card_on_file_id = card_on_file.cardOnFileId
+
+        stub_successful_create_action(
+          path: "/service/rest/donation",
+          body: NfgRestClientStubs::RequestResponses.donation_success(chargeId: 1234567890).to_json
+        )
       end
 
       context "and the attempt is successful" do
         it "should have a status of success and return a chargeID with a non-zero value" do
-          p donation_attributes(changes_to_attributes,  "underscore")
-          p donation
           donation.create
           expect(donation.status).to eq("Success")
           expect(donation.chargeId.to_s).to match(charged_id_regex)
