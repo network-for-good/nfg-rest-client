@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.12] - 2026-09-03
+## [7.2.3.1] - 2026-09-03
 
 ### Added
 
@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- Renamed version scheme from `1.0.x` to `X.Y.Z.W`, where `X.Y.Z` tracks the pinned Rails/activesupport version and `W` is the gem's own incremental version, matching the convention used by other NFG gems.
 - Pinned transitive `activesupport` to `= 7.2.3.2` to resolve known CVEs (see the Gemfile comment for the full list).
 - Committed `Gemfile.lock` (previously gitignored) for CI reproducibility.
 - Relaxed the `bundler` development dependency (was pinned to `~> 2.2.33`, incompatible with Ruby 3.4.2).
