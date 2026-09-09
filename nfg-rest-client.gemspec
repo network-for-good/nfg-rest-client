@@ -27,9 +27,9 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 2.2.33"
   spec.add_development_dependency "rake", "~> 12.3.3"
   spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rspec_junit_formatter"
   spec.add_development_dependency "vcr"
   spec.add_development_dependency "webmock"
   spec.add_development_dependency "mocha"
