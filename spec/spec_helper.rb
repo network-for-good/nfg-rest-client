@@ -4,6 +4,8 @@ require 'nfg-rest-client'
 require "ostruct"
 require 'webmock/rspec'
 
+WebMock.disable_net_connect!(allow_localhost: true)
+
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each {|f| require f }
 
 RSpec.configure do |config|
